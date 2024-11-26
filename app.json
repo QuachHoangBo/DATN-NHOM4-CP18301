@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "rn-CarRental",
+    "name": "RN Car Rental",
     "slug": "rn-CarRental",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -8,17 +8,21 @@
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "splash": {
-      "image": "./assets/images/splash.png",
+      "image": "./assets/images/icon.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
     "ios": {
+      "bundleIdentifier": "com.render.rncarrental",
+      "buildNumber": "1.0.0",
       "supportsTablet": true
     },
     "android": {
+      "package": "com.render.rncarrental",
+      "versionCode": 2,
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "foregroundImage": "./assets/images/icon.png",
+        "backgroundColor": "#FFFFFF"
       }
     },
     "web": {
