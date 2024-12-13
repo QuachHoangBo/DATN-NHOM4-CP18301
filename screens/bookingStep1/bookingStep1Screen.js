@@ -27,7 +27,7 @@ const BookingStep1Screen = ({ navigation }) => {
   const handleNext = async () => {
     try {
       // Gọi API để tạo booking mới
-      const response = await fetch("http://localhost:3000/api/bookings", {
+      const response = await fetch("http://192.168.1.6:3000/api/bookings", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

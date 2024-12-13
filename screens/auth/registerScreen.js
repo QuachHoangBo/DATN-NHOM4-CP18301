@@ -50,7 +50,7 @@ const RegisterScreen = ({ navigation }) => {
     }
 
     try {
-      const response = await fetch(`${process.env.HOST}:3000/api/register`, {
+      const response = await fetch(`http://192.168.1.6:3000/api/register`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

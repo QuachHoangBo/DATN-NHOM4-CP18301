@@ -48,37 +48,15 @@ const AccountDetailsScreen = ({ navigation }) => {
     }
   };
   const updateUserInfo = async () => {
-    try {
-      const updatedUser = {
-        fullName: state.name,
-        email: state.email, // Email dùng làm định danh
-        phoneNumber: state.mobileNumber,
-        password: state.password,
-      };
-
-      // Gửi yêu cầu PUT đến API backend
-      const response = await fetch(`${process.env.HOST}:3000/api/updateUser`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(updatedUser),
-      });
-
-      const result = await response.json();
-
-      if (response.ok) {
-        // Lưu thông tin mới vào AsyncStorage nếu thành công
-        await AsyncStorage.setItem("userInfo", JSON.stringify(updatedUser));
-        alert("Thông tin đã được cập nhật!");
-        navigation.pop();
-      } else {
-        alert(result.message || "Có lỗi xảy ra khi cập nhật thông tin.");
-      }
-    } catch (error) {
-      console.error("Error updating user info:", error);
-      alert("Không thể kết nối đến server.");
-    }
+    const updatedUser = {
+      fullName: state.name,
+      email: state.email, // Email dùng làm định danh
+      phoneNumber: state.mobileNumber,
+      password: state.password,
+    };
+    // Lưu thông tin mới vào AsyncStorage nếu thành công
+    await AsyncStorage.setItem("userInfo", JSON.stringify(updatedUser));
+    alert("Thông tin đã được cập nhật!");
   };
 
   const [state, setState] = useState({

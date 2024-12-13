@@ -30,7 +30,7 @@ const AvailableCarsScreen = ({ navigation }) => {
 
   const fetchAvailableCars = async () => {
     try {
-      const response = await fetch(`${process.env.HOST}:3000/api/available`);
+      const response = await fetch(`http://192.168.1.6:3000/api/available`);
       const data = await response.json();
       const dataWithIds = data.map((item, index) => ({
         ...item,

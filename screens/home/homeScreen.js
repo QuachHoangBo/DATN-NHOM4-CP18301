@@ -94,15 +94,20 @@ const HomeScreen = ({ navigation }) => {
   } = state;
 
   useEffect(() => {
-    fetch(`${process.env.HOST}:3000/api/deals`)
+    fetch("http://192.168.1.6:3000/api/deals")
       .then((response) => response.json())
       .then((data) => setHotDealsList(data))
       .catch((error) => console.error("Error fetching hot deals:", error));
 
-    fetch(`${process.env.HOST}:3000/api/offers`)
+    fetch("http://192.168.1.6:3000/api/offers")
       .then((response) => response.json())
       .then((data) => setLatestOfferList(data))
       .catch((error) => console.error("Error fetching latest offers:", error));
+
+    fetch("http://192.168.1.6:3000/api/locations")
+      .then((response) => response.json())
+      .then((data) => setLocationsList(data))
+      .catch((error) => console.error("Error fetching locations:", error));
   }, []);
 
   return (
@@ -957,54 +962,73 @@ const HomeScreen = ({ navigation }) => {
   }
 
   function pickupLocationInfo() {
-    const pickupAddress = "";
     return (
       <View style={{ marginVertical: Sizes.fixPadding + 5.0 }}>
-        <View style={styles.searchContainer}>
-          <TextInput
-            style={styles.searchInput}
-            placeholder="Nhập điểm đón"
-            value={pickupAddress} // Hiển thị địa chỉ trong ô nhập// Cập nhật nếu người dùng nhập thủ công
-          />
-          <TouchableOpacity
-            activeOpacity={0.9}
-            onPress={() => navigation.navigate("Location")}
-            style={styles.pickupLocationWrapStyle}
-          >
-            <Text
-              numberOfLines={1}
-              style={{ flex: 1, ...Fonts.whiteColor15Regular }}
+        <Text style={{ ...Fonts.whiteColor14Regular }}>
+          Select Pick-up Location
+        </Text>
+        <Menu
+          visible={showPickupLocationOptions}
+          anchor={
+            <TouchableOpacity
+              activeOpacity={0.9}
+              onPress={() => updateState({ showPickupLocationOptions: true })}
+              style={styles.pickupLocationWrapStyle}
             >
-              {selectedPickupLocation && selectedPickupLocation.address
-                ? selectedPickupLocation.address
-                : "Select Location"}
-            </Text>
-            <MaterialCommunityIcons
-              name="chevron-down"
-              size={22}
-              color={Colors.whiteColor}
-            />
-          </TouchableOpacity>
-        </View>
+              <Text
+                numberOfLines={1}
+                style={{ flex: 1, ...Fonts.whiteColor15Regular }}
+              >
+                {selectedPickupLocation && selectedPickupLocation.address
+                  ? selectedPickupLocation.address
+                  : "Select Location"}
+              </Text>
+              <MaterialCommunityIcons
+                name="chevron-down"
+                size={22}
+                color={Colors.whiteColor}
+              />
+            </TouchableOpacity>
+          }
+          onRequestClose={() =>
+            updateState({ showPickupLocationOptions: false })
+          }
+        >
+          <View
+            style={{
+              width: "90%",
+              paddingTop: Sizes.fixPadding,
+              maxHeight: height - 100,
+            }}
+          >
+            <ScrollView showsVerticalScrollIndicator={false}>
+              {locationsList.map((item, index) => (
+                <Text
+                  key={index}
+                  style={{
+                    marginHorizontal: Sizes.fixPadding,
+                    marginBottom: Sizes.fixPadding,
+                    ...Fonts.blackColor15Regular,
+                  }}
+                  onPress={() =>
+                    updateState({
+                      selectedPickupLocation: item,
+                      showPickupLocationOptions: false,
+                    })
+                  }
+                >
+                  {item.address}
+                </Text>
+              ))}
+            </ScrollView>
+          </View>
+        </Menu>
       </View>
     );
   }
 };
 
 const styles = StyleSheet.create({
-  searchContainer: {
-    position: "absolute",
-    top: 10,
-    width: "100%",
-    paddingHorizontal: 10,
-    zIndex: 1,
-  },
-  searchInput: {
-    height: 40,
-    backgroundColor: "#fff",
-    borderRadius: 5,
-    paddingHorizontal: 10,
-  },
   headerWrapStyle: {
     paddingHorizontal: Sizes.fixPadding * 2.0,
     paddingTop: Sizes.fixPadding * 2.0,

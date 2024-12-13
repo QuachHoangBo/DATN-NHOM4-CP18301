@@ -48,7 +48,7 @@ const LoginScreen = ({ navigation }) => {
     }
 
     try {
-      const response = await fetch(`${process.env.HOST}:3000/api/login`, {
+      const response = await fetch(`http://192.168.1.6:3000/api/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -76,7 +76,7 @@ const LoginScreen = ({ navigation }) => {
         alert(data.message || "Đăng nhập thất bại");
       }
     } catch (error) {
-      console.error("Lỗi đăng nhập:", error);
+      console.error("Lỗi khi gọi API:", error.message);
       alert("Đã xảy ra lỗi. Vui lòng thử lại.");
     }
   };
